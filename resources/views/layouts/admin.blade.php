@@ -240,11 +240,29 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a href="pages/widgets.html" class="nav-link">
-                            <i class="nav-icon fas fa-th"></i>
+                        <router-link to="/dashboard" class="nav-link">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
-                                Widgets
-                                <span class="right badge badge-danger">New</span>
+                                Dashboard
+                            </p>
+                        </router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link to="/profile" class="nav-link">
+                            <i class="nav-icon fas fa-user"></i>
+                            <p>
+                                Profile
+                            </p>
+                        </router-link>
+                    </li>
+                    <li class="nav-item">
+                        <form id="logout" method="POST" action="{{ route('logout') }}">
+                            @csrf
+                        </form>
+                        <a href="javascript:void(0)" class="nav-link" onclick="document.getElementById('logout').submet">
+                            <i class="nav-icon fas fa-power-off"></i>
+                            <p>
+                                Logout
                             </p>
                         </a>
                     </li>

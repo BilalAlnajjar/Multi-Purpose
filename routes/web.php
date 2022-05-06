@@ -17,8 +17,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('admin.index');
-})->middleware(['auth'])->name('dashboard');
+//Route::get('/dashboard', function () {
+//    return view('admin.index');
+//})->middleware(['auth'])->name('dashboard');
+
+Route::view('/{any}','admin.index')->middleware(['auth'])
+->where('any','.*');
 
 require __DIR__.'/auth.php';
