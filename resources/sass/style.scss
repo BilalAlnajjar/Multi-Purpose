@@ -1,0 +1,15 @@
+@import "_variables";
+
+.router-link-exact-active{
+    background-color: #3f6791;
+    color: #fff !important;
+}
+
+.nav-sidebar>.nav-item>.nav-link:focus{
+    background-color: #3f6791 !important;
+    color: #fff !important;
+}
+//.nav-sidebar>.nav-item>.nav-link:hover{
+//    background-color: #3f6791 !important;
+//    color: #fff !important;
+//}

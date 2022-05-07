@@ -11,10 +11,11 @@ const mix = require('laravel-mix');
  |
  */
 
-// mix.js('resources/js/app.js', 'public/js').vue().postCss('resources/css/app.css', 'public/css', [
-//     require('postcss-import'),
-//     require('tailwindcss'),
-//     require('autoprefixer'),
-// ]);
+mix.js("resources/js/app.js", "public/js").vue(3)
+    .postCss("resources/css/app.css", "public/css", [
+        require("tailwindcss"),
+    ]).sass('resources/sass/style.scss','public/css');
 
-mix.js('resources/js/app.js', 'public/js').vue();
+if (mix.inProduction()) {
+    mix.version();
+}
