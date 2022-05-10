@@ -31,8 +31,8 @@
                                     <tr v-for="user in users" :key="user.id">
                                         <td>{{user.id}}</td>
                                         <td>{{ user.name }}</td>
-                                        <td>{{ user.created_at}}</td>
-                                        <td><span class="tag tag-success">{{user.usertype}}</span></td>
+                                        <td>{{ myDate(user.created_at)}}</td>
+                                        <td><span class="tag tag-success">{{uperText(user.usertype)}}</span></td>
                                         <td>
                                             <a href="#">
                                                 <i class="fas fa-edit blue"></i>
@@ -145,6 +145,7 @@
 
 <script>
 import Form from "vform";
+import moment from 'moment';
 
 export default {
     data(){
@@ -168,10 +169,24 @@ export default {
         },
         createUser(){
             this.form.post('api/user');
+            Toast.fire({
+                icon: 'success',
+                title: 'User Created in successfully'
+            });
+        },
+
+        uperText(text){
+            return text.charAt(0).toUpperCase() + text.slice(1);
+        },
+
+        myDate(date){
+           return moment(date).format("MMM Do YY");
         }
+
     },
     created() {
         this.loadUsers();
+        setInterval(() => this.loadUsers(),3000);
     },
     name: "Users"
 }
