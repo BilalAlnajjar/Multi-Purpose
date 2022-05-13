@@ -11,6 +11,8 @@ import Swal from 'sweetalert2'
 window.form = Form;
 window.Swal = Swal;
 
+window.Fire = createApp({});
+
 
 
 import ExampleComponent from './Components/ExampleComponent';
