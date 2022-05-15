@@ -5,10 +5,19 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    /**
+     * Create a new controller instance
+     *
+     * @return void
+     */
+    public function __construct(){
+        $this->middleware('api');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +25,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return User::latest()->paginate(10);
+        return User::latest()->paginate(20);
     }
 
     /**
@@ -62,7 +71,15 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $this->validate($request,[
+            'name'   =>  'required|string|max:191',
+            'email'  =>  'required|string|email|max:191|unique:users,email,'.$user->id,
+            'password' => 'sometimes|min:6',
+        ]);
+
+        $user->update($request->all());
+        return ['message' => 'Updated the user info'];
     }
 
     /**
@@ -80,4 +97,29 @@ class UserController extends Controller
             'message' => 'User Deleted',
         ];
     }
+
+    public function login(Request $request){
+        $request->validate([
+            'email' =>  'required|email',
+            'password' => 'required'
+        ]);
+
+        $user = User::where('email',$request->email)->first();
+        if($user && Hash::check($request->password, $user->password)) {
+            $token = Str::random(64);
+
+            $user->api_token = $token;
+            $user->save();
+
+            return [
+                'token' => $token,
+            ];
+        }
+
+        return response()->json([
+            'error' => 'Invalid Username Or Password',
+        ]);
+
+
+        }
 }

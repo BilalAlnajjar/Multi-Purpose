@@ -10,7 +10,7 @@
                                 <h3 class="card-title">Users Table</h3>
 
                                 <div class="card-tools">
-                                    <button class="btn btn-success" data-toggle="modal" data-target="#createuser">New Add
+                                    <button class="btn btn-success" @click="openCreateModel">New Add
                                         <i class="fas fa-user-plus fa-fw"></i>
                                     </button>
                                 </div>
@@ -36,7 +36,7 @@
                                         <td>{{ myDate(user.created_at)}}</td>
                                         <td><span class="tag tag-success">{{uperText(user.usertype)}}</span></td>
                                         <td>
-                                            <a href="#">
+                                            <a href="#" @click="openEditModel(user)">
                                                 <i class="fas fa-edit blue"></i>
                                             </a>
                                             |
@@ -65,13 +65,14 @@
                     <div class="modal-dialog modal-dialog-centered lg:left-24 " role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                                <h5 v-show="!editmodal" class="modal-title" id="exampleModalLongTitle">Add New</h5>
+                                <h5 v-show="editmodal" class="modal-title" id="exampleModalLongTitle">Update User's Info</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form @submit.prevent="createUser">
+                                <form @submit.prevent="editmodal ? updateuser() :createUser()">
 
                                     <div class="flex justify-center">
                                         <div class="w-5/6">
@@ -117,7 +118,8 @@
 
                                     <button data-dismiss="modal"  type="button" class="inline-block px-6 py-2.5 bg-red-600 text-white font-medium leading-tight uppercase rounded text-sm px-5 py-2.5 shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out">Decline</button>
                                     <!--                                <button data-modal-toggle="adduser" type="button" class="text-white focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-400 dark:hover:bg-green-600 dark:focus:ring-green-800">Create</button>-->
-                                    <button @click="loadUsers"   type="submit" class="inline-block px-6 py-2.5 bg-green-500 text-white font-medium leading-tight uppercase text-sm px-5 py-2.5 text-center rounded shadow-md hover:bg-green-600 hover:shadow-lg focus:bg-green-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-700 active:shadow-lg transition duration-150 ease-in-out">Create</button>
+                                    <button v-show="!editmodal" @click="loadUsers"   type="submit" class="inline-block px-6 py-2.5 bg-green-500 text-white font-medium leading-tight uppercase text-sm px-5 py-2.5 text-center rounded shadow-md hover:bg-green-600 hover:shadow-lg focus:bg-green-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-700 active:shadow-lg transition duration-150 ease-in-out">Create</button>
+                                    <button v-show="editmodal" @click="loadUsers"   type="submit" class="inline-block px-6 py-2.5 bg-green-500 text-white font-medium leading-tight uppercase text-sm px-5 py-2.5 text-center rounded shadow-md hover:bg-green-600 hover:shadow-lg focus:bg-green-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-700 active:shadow-lg transition duration-150 ease-in-out">Update</button>
 
                             </div>
                             </form>
@@ -142,7 +144,9 @@ export default {
     data(){
         return {
             users:{},
+            editmodal: false,
             form: new Form({
+                id: '',
                 name: "",
                 email: '',
                 password: '',
@@ -153,6 +157,17 @@ export default {
         }
     },
     methods:{
+        openCreateModel(){
+            this.editmodal = false;
+            this.form.reset();
+            $("#createuser").modal('show');
+        },
+        openEditModel(user){
+            this.editmodal = true;
+            this.form.reset();
+            $("#createuser").modal('show');
+            this.form.fill(user)
+        },
         loadUsers(){
             axios.get('api/user').then(res => {
                 this.users = res.data.data
@@ -177,6 +192,24 @@ export default {
                     });
                 });
         },
+        updateuser(){
+            // console.log("bilal");
+            this.form.put('api/user/'+this.form.id)
+                .then(() => {
+                    $("#createuser").modal('hide');
+                    this.loadUsers();
+                    Swal.fire(
+                        'Updated!',
+                        'Updated User is successfully.',
+                        'success'
+                    )
+
+                })
+                .catch(() => {
+
+                });
+        },
+
         uperText(text){
             return text.charAt(0).toUpperCase() + text.slice(1);
         },
