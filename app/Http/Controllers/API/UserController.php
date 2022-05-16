@@ -5,6 +5,8 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 
@@ -16,8 +18,9 @@ class UserController extends Controller
      * @return void
      */
     public function __construct(){
-        $this->middleware('api');
+        $this->middleware('auth:api');
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -25,6 +28,8 @@ class UserController extends Controller
      */
     public function index()
     {
+//        $user = Auth::guard('api')->user();
+//        return response()->json(['user' => $user]);
         return User::latest()->paginate(20);
     }
 
@@ -57,6 +62,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function profile()
+    {
+        return Auth::guard('api')->user(); // Or auth('api')->user();
+    }
+
     public function show($id)
     {
         //
@@ -99,21 +109,23 @@ class UserController extends Controller
     }
 
     public function login(Request $request){
-        $request->validate([
+        $validation =  Validator::make($request->all(),[
             'email' =>  'required|email',
             'password' => 'required'
         ]);
 
-        $user = User::where('email',$request->email)->first();
-        if($user && Hash::check($request->password, $user->password)) {
-            $token = Str::random(64);
 
-            $user->api_token = $token;
-            $user->save();
+        if($validation->fails()){
+            return response()->json(['error' => $validation->errors()],422);
+        }
 
-            return [
-                'token' => $token,
-            ];
+        if(Auth::attempt(['email' => $request->email,'password' => $request->password])){
+            $user = Auth::user();
+            $data['token_type'] = 'Bearer';
+            $data['access_token'] = $user->createToken('MyApp')->accessToken;
+            $data['user'] = $user;
+
+            return response()->json($data,200);
         }
 
         return response()->json([

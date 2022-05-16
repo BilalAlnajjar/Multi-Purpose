@@ -21730,8 +21730,46 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var vform__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vform */ "./node_modules/vform/dist/vform.es.js");
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "ProfileComponent"
+  name: "ProfileComponent",
+  data: function data() {
+    return {
+      form: new vform__WEBPACK_IMPORTED_MODULE_0__["default"]({
+        id: '',
+        name: "",
+        email: '',
+        password: '',
+        usertype: '',
+        bio: '',
+        photo: ''
+      })
+    };
+  },
+  methods: {
+    updatePhoto: function updatePhoto(e) {
+      var _this = this;
+
+      // console.log("uploaded");
+      var file = e.target.files[0];
+      var reader = new FileReader();
+
+      reader.onloadend = function (file) {
+        // console.log('RESULT', reader.result)
+        _this.form.photo = reader.result;
+      };
+
+      reader.readAsDataURL(file);
+    }
+  },
+  created: function created() {
+    var _this2 = this;
+
+    axios.get("api/profile").then(function (res) {
+      _this2.form.fill(res.data);
+    });
+  }
 });
 
 /***/ }),
@@ -21934,17 +21972,130 @@ __webpack_require__.r(__webpack_exports__);
 var _hoisted_1 = {
   "class": "content-wrapper"
 };
-
-var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_2 = {
   "class": "content-header"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+};
+var _hoisted_3 = {
   "class": "container-fluid"
-}, " Profile ")], -1
+};
+
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"col-md-12\"><!-- Widget: user widget style 1 --><div class=\"card card-widget widget-user\"><!-- Add the bg color to the header using any of the bg-* classes --><div class=\"widget-user-header text-white\" style=\"background:url(&#39;/dist/img/photo1.png&#39;) center center;\"><h3 class=\"widget-user-username text-left font-weight-bold\">Elizabeth Pierce</h3><h5 class=\"widget-user-desc text-left\">Web Designer</h5></div><div class=\"widget-user-image\"><img class=\"img-circle\" src=\"/dist/img/user3-128x128.jpg\" alt=\"User Avatar\"></div><div class=\"card-footer\"><div class=\"row\"><div class=\"col-sm-4 border-right\"><div class=\"description-block\"><h5 class=\"description-header\">3,200</h5><span class=\"description-text\">SALES</span></div><!-- /.description-block --></div><!-- /.col --><div class=\"col-sm-4 border-right\"><div class=\"description-block\"><h5 class=\"description-header\">13,000</h5><span class=\"description-text\">FOLLOWERS</span></div><!-- /.description-block --></div><!-- /.col --><div class=\"col-sm-4\"><div class=\"description-block\"><h5 class=\"description-header\">35</h5><span class=\"description-text\">PRODUCTS</span></div><!-- /.description-block --></div><!-- /.col --></div><!-- /.row --></div></div><!-- /.widget-user --></div>", 1);
+
+var _hoisted_5 = {
+  "class": "col-md-12"
+};
+var _hoisted_6 = {
+  "class": "card"
+};
+
+var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"card-header p-2\"><ul class=\"nav nav-pills\"><li class=\"nav-item\"><a class=\"nav-link active\" href=\"#activity\" data-toggle=\"tab\">Activity</a></li><li class=\"nav-item\"><a class=\"nav-link\" href=\"#settings\" data-toggle=\"tab\">Settings</a></li></ul></div>", 1);
+
+var _hoisted_8 = {
+  "class": "card-body"
+};
+var _hoisted_9 = {
+  "class": "tab-content"
+};
+var _hoisted_10 = {
+  "class": "tab-pane",
+  id: "settings"
+};
+var _hoisted_11 = {
+  "class": "form-horizontal",
+  enctype: "multipart/form-data"
+};
+var _hoisted_12 = {
+  "class": "form-group row"
+};
+
+var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "inputName",
+  "class": "col-sm-2 col-form-label"
+}, "Name", -1
 /* HOISTED */
 );
 
+var _hoisted_14 = {
+  "class": "col-sm-10"
+};
+var _hoisted_15 = {
+  "class": "form-group row"
+};
+
+var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "inputEmail",
+  "class": "col-sm-2 col-form-label"
+}, "Email", -1
+/* HOISTED */
+);
+
+var _hoisted_17 = {
+  "class": "col-sm-10"
+};
+
+var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "form-group row"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "inputExperience",
+  "class": "col-sm-2 col-form-label"
+}, "Experience"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "col-sm-10"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
+  "class": "form-control",
+  id: "inputExperience",
+  placeholder: "Experience"
+})])], -1
+/* HOISTED */
+);
+
+var _hoisted_19 = {
+  "class": "form-group row"
+};
+
+var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "inputName2",
+  "class": "col-sm-2 col-form-label"
+}, "Photo", -1
+/* HOISTED */
+);
+
+var _hoisted_21 = {
+  "class": "col-sm-10"
+};
+
+var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"form-group row\"><label for=\"inputSkills\" class=\"col-sm-2 col-form-label\">Skills</label><div class=\"col-sm-10\"><input type=\"text\" class=\"form-control\" id=\"inputSkills\" placeholder=\"Skills\"></div></div><div class=\"form-group row\"><div class=\"offset-sm-2 col-sm-10\"><div class=\"checkbox\"><label><input type=\"checkbox\"> I agree to the <a href=\"#\">terms and conditions</a></label></div></div></div><div class=\"form-group row\"><div class=\"offset-sm-2 col-sm-10\"><button type=\"submit\" class=\"btn btn-danger\">Submit</button></div></div>", 3);
+
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Content Header (Page header) "), _hoisted_2]);
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Content Header (Page header) "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [_hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.card-header "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.tab-pane "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.tab-pane "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [_hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    type: "text",
+    "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
+      return $data.form.name = $event;
+    }),
+    "class": "form-control",
+    id: "inputName",
+    placeholder: "Name"
+  }, null, 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.form.name]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [_hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    type: "email",
+    "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
+      return $data.form.email = $event;
+    }),
+    "class": "form-control",
+    id: "inputEmail",
+    placeholder: "Email"
+  }, null, 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.form.email]])])]), _hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [_hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    type: "file",
+    onChange: _cache[2] || (_cache[2] = function ($event) {
+      return $options.updatePhoto();
+    }),
+    "class": "form-control",
+    id: "inputName2"
+  }, null, 32
+  /* HYDRATE_EVENTS */
+  )])]), _hoisted_22])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.tab-pane ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.tab-content ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.card-body ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /.card ")])])])]);
 }
 
 /***/ }),
